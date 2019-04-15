@@ -19,12 +19,13 @@
     <!-- body display date day and events -->
     <div class="full-calendar-body">
       <div class="weeks">
-        <strong class="week" v-for="dayIndex in 7">{{ (dayIndex - 1) | localeWeekDay(firstDay, locale) }}</strong>
+        <strong class="week" v-for="dayIndex in 7" v-bind:key="dayIndex">{{ (dayIndex - 1) | localeWeekDay(firstDay, locale) }}</strong>
       </div>
       <div class="dates" ref="dates">
         <div class="dates-bg">
-          <div class="week-row" v-for="week in currentDates">
+          <div class="week-row" v-for="week in currentDates"  v-bind:key="week">
             <div class="day-cell" v-for="day in week"
+                  v-bind:key="day"
                  :class="{'today' : day.isToday,
               'not-cur-month' : !day.isCurMonth}">
               <p class="day-number">{{ day.monthDay }}</p>
@@ -34,13 +35,14 @@
 
         <!-- absolute so we can make dynamic td -->
         <div class="dates-events">
-          <div class="events-week" v-for="week in currentDates">
+          <div class="events-week" v-for="week in currentDates" v-bind:key="week">
             <div class="events-day" v-for="day in week" track-by="$index"
+                 v-bind:key="day"
                  :class="{'today' : day.isToday,
               'not-cur-month' : !day.isCurMonth}" @click.stop="dayClick(day.date, $event)">
               <p class="day-number" :class="{ 'has-event' : event.cssClass }">{{day.monthDay}}</p>
               <div class="event-box">
-                <event-card :event="event" :date="day.date" :firstDay="firstDay" v-for="event in day.events" v-show="event.cellIndex <= eventLimit" @click="eventClick">
+                <event-card :event="event" :date="day.date" :firstDay="firstDay" v-for="event in day.events" v-bind:key="event" v-show="event.cellIndex <= eventLimit" @click="eventClick">
                   <template scope="p">
                     <slot name="fc-event-card" :event="p.event"></slot>
                   </template>
@@ -64,6 +66,7 @@
           <div class="more-body">
             <ul class="body-list">
               <li v-for="event in selectDay.events"
+                  v-bind:key="event"
                   v-show="event.isShow" class="body-item"
                   @click="eventClick(event, $event)">
                 {{event.title}}
