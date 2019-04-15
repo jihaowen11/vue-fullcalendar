@@ -18,7 +18,7 @@
     </fc-header>
     <!-- body display date day and events -->
     <div class="full-calendar-body">
-      <div class="weeks">
+      <div class="weeks jhw">
         <strong class="week" v-for="dayIndex in 7" v-bind:key="dayIndex">{{ (dayIndex - 1) | localeWeekDay(firstDay, locale) }}</strong>
       </div>
       <div class="dates" ref="dates">
